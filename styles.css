@@ -1,0 +1,22 @@
+* { box-sizing: border-box; }
+body { font-family: system-ui, -apple-system, sans-serif; margin: 0; padding: 0; background: #f5f5f5; color: #222; }
+.app { display: flex; flex-direction: column; height: 100vh; min-height: 400px; }
+.panel { flex: 1; display: flex; flex-direction: column; padding: 12px; overflow: auto; background: #fff; }
+.panel h2 { margin: 0 0 12px; font-size: 16px; font-weight: 600; color: #333; }
+.notes-add { margin-bottom: 16px; }
+.notes-add textarea { width: 100%; min-height: 80px; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font: inherit; resize: vertical; }
+.notes-add textarea:focus { outline: none; border-color: #4a90d9; }
+.notes-add button { margin-top: 8px; padding: 8px 14px; background: #4a90d9; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; }
+.notes-add button:hover { background: #357abd; }
+.notes-list { list-style: none; margin: 0; padding: 0; }
+.note-item { display: flex; align-items: flex-start; gap: 8px; padding: 10px; margin-bottom: 8px; background: #f9f9f9; border-radius: 6px; border: 1px solid #eee; }
+.note-item .note-body { flex: 1; min-width: 0; }
+.note-item .note-date { font-size: 11px; color: #888; margin-bottom: 4px; }
+.note-item .content { white-space: pre-wrap; word-break: break-word; font-size: 13px; }
+.note-item .content.editing { padding: 4px; border: 1px solid #4a90d9; border-radius: 4px; background: #fff; min-height: 60px; }
+.note-item .actions { flex-shrink: 0; display: flex; gap: 4px; }
+.note-item button { padding: 4px 8px; font-size: 12px; border: none; border-radius: 4px; cursor: pointer; background: #e0e0e0; color: #333; }
+.note-item button:hover { background: #d0d0d0; }
+.note-item button.delete { background: #f0e0e0; color: #b33; }
+.note-item button.delete:hover { background: #e8c8c8; }
+.empty { color: #888; font-size: 13px; padding: 16px 0; }
