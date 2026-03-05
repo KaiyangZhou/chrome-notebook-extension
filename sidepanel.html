@@ -11,7 +11,13 @@
       <h2>Notes</h2>
       <div class="notes-add">
         <textarea id="new-note" placeholder="Write a note..."></textarea>
-        <button type="button" id="add-note">Add note</button>
+        <div class="notes-add-options">
+          <label class="priority-check">
+            <input type="checkbox" id="new-note-priority" />
+            Priority
+          </label>
+          <button type="button" id="add-note">Add note</button>
+        </div>
       </div>
       <ul class="notes-list" id="notes-list"></ul>
     </section>

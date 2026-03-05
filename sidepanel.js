@@ -36,16 +36,23 @@
       list.innerHTML = '<li class="empty">No notes yet. Add one above.</li>';
       return;
     }
-    list.innerHTML = state.notes.map((note) => {
+    const sorted = [...state.notes].sort((a, b) => (b.priority ? 1 : 0) - (a.priority ? 1 : 0) || (b.createdAt || 0) - (a.createdAt || 0));
+    list.innerHTML = sorted.map((note) => {
       const contentEscaped = escapeHtml(note.content);
       const dateStr = formatDate(note.createdAt);
+      const priority = !!note.priority;
+      const priorityClass = priority ? ' priority' : '';
       return `
-        <li class="note-item" data-id="${escapeHtml(note.id)}">
+        <li class="note-item${priorityClass}" data-id="${escapeHtml(note.id)}">
           <div class="note-body">
-            ${dateStr ? `<div class="note-date">${escapeHtml(dateStr)}</div>` : ''}
+            <div class="note-meta">
+              ${dateStr ? `<span class="note-date">${escapeHtml(dateStr)}</span>` : ''}
+              ${priority ? '<span class="priority-badge">Priority</span>' : ''}
+            </div>
             <div class="content" data-id="${escapeHtml(note.id)}">${contentEscaped || '<em>Empty note</em>'}</div>
           </div>
           <div class="actions">
+            <button type="button" class="priority-toggle" title="${priority ? 'Remove priority' : 'Mark as priority'}">${priority ? '★' : '☆'}</button>
             <button type="button" class="edit">Edit</button>
             <button type="button" class="delete">Delete</button>
           </div>
@@ -82,6 +89,18 @@
         renderNotes();
       });
     });
+
+    list.querySelectorAll('.note-item .priority-toggle').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const id = btn.closest('.note-item').dataset.id;
+        const note = state.notes.find((n) => n.id === id);
+        if (note) {
+          note.priority = !note.priority;
+          save(state, true);
+          renderNotes();
+        }
+      });
+    });
   }
 
   function escapeHtml(s) {
@@ -101,8 +120,10 @@
     const textarea = document.getElementById('new-note');
     const content = textarea.value.trim();
     if (!content) return;
-    state.notes.push({ id: id(), content, createdAt: Date.now() });
+    const priority = document.getElementById('new-note-priority').checked;
+    state.notes.push({ id: id(), content, createdAt: Date.now(), priority });
     textarea.value = '';
+    document.getElementById('new-note-priority').checked = false;
     save(state, true);
     renderNotes();
   });
