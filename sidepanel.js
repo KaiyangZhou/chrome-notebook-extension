@@ -77,6 +77,7 @@
           contentEl.classList.add('editing');
           contentEl.innerHTML = `<textarea>${escapeHtml(note.content)}</textarea>`;
           contentEl.querySelector('textarea').focus();
+          btn.textContent = 'Save';
         }
       });
     });
